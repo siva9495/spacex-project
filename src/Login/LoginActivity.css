@@ -1,0 +1,55 @@
+.login_container{
+    height: 100vh;
+    width: 100%;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.spacex_text{
+    margin-bottom: 50px;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: red; */
+}
+
+#logo{
+    margin-left: 150px;
+    height: 100px;
+}
+
+#logo .fill-white {
+    fill: #fff;
+}
+
+.inner_frame_login{
+    width: 230px;
+    height: 40px;
+    border-radius: 8px;
+    border: 2px solid white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+}
+
+.bxl-google{
+    margin-left: 10px;
+    margin-right: 10px;
+    color: white;
+    font-size: 30px;
+}
+
+.inner_frame_login h4{
+    color: white;
+    font-family: var(--font-galano);
+}
+
+.inner_frame_login:hover{
+    border: 3px solid white;
+}
