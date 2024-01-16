@@ -44,7 +44,7 @@ const ListOflaunches = () => {
       </div>
       <div className='list_launches'>
         <div className='loading_launches'>
-          <h1>LAUNCHES</h1>
+          <h4>LAUNCHES</h4>
         </div>
         {/* {launches.map((launch) => (
           <div key={launch.flight_number} className='lanch_space'>

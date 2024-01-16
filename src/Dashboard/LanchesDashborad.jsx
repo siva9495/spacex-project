@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../Components/Navbar';
 import './LanchesDashborad.css';
-import ListOfLanches from '../Components/ListOfLanches';
+import ListOfLanches from '../Components/ListOfLaunches';
 
 const LanchesDashborad = () => {
   return (
