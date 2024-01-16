@@ -3,20 +3,24 @@ import './ListOfLaunches.css';
 
 const ListOflaunches = () => {
   const [launches, setLaunches] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch SpaceX launches from the API
     const fetchData = async () => {
       try {
         const response = await fetch('https://api.spacexdata.com/v3/launches');
         const data = await response.json();
 
-        // Filter launches with flickr_images
         const launchesWithImages = data
           .filter((launch) => launch.links.flickr_images && launch.links.flickr_images.length > 0)
           .sort((a, b) => new Date(b.launch_date_utc) - new Date(a.launch_date_utc));
 
         setLaunches(launchesWithImages);
+
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 4000);
+
       } catch (error) {
         console.error('Error fetching SpaceX launches:', error);
       }
@@ -25,7 +29,7 @@ const ListOflaunches = () => {
     fetchData();
   }, []);
 
-  // Function to format date like 'JANUARY 14, 2024'
+  //function to format the date
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-US', options).toUpperCase();
@@ -43,16 +47,19 @@ const ListOflaunches = () => {
         </div>
       </div>
       <div className='list_launches'>
-        <div className='loading_launches'>
-          <h4>LAUNCHES</h4>
-        </div>
-        {/* {launches.map((launch) => (
-          <div key={launch.flight_number} className='lanch_space'>
-            <img src={launch.links.flickr_images[0]} alt='Flickr Img' />
-            <span id='date_mission'>{formatDate(launch.launch_date_utc)}</span>
-            <span id='mission_name'>{launch.mission_name.toUpperCase()}</span>
-          </div>
-        ))} */}
+        {isLoading && (
+            <div className='loading_launches'>
+              <h4>LAUNCHES</h4>
+            </div>
+        )}
+          {!isLoading &&
+            launches.map((launch) => (
+              <div key={launch.flight_number} className='lanch_space'>
+                <img src={launch.links.flickr_images[0]} alt='Flickr Img' />
+                <span id='date_mission'>{formatDate(launch.launch_date_utc)}</span>
+                <span id='mission_name'>{launch.mission_name.toUpperCase()}</span>
+              </div>
+          ))}
       </div>
     </div>
   );
