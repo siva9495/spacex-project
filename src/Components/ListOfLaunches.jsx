@@ -4,11 +4,20 @@ import './ListOfLaunches.css';
 const ListOflaunches = () => {
   const [launches, setLaunches] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedFilter, setSelectedFilter] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://api.spacexdata.com/v3/launches');
+        let apiUrl = 'https://api.spacexdata.com/v3/launches';
+
+        if (selectedFilter === 'upcoming') {
+          apiUrl += '/upcoming';
+        } else if (selectedFilter === 'past') {
+          apiUrl += '/past';
+        }
+
+        const response = await fetch(apiUrl);
         const data = await response.json();
 
         const launchesWithImages = data
@@ -20,14 +29,13 @@ const ListOflaunches = () => {
         setTimeout(() => {
           setIsLoading(false);
         }, 4000);
-
       } catch (error) {
         console.error('Error fetching SpaceX launches:', error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [selectedFilter]);
 
   //function to format the date
   const formatDate = (dateString) => {
@@ -35,11 +43,16 @@ const ListOflaunches = () => {
     return new Date(dateString).toLocaleDateString('en-US', options).toUpperCase();
   };
 
+  const handleSelectFilter = (event) => {
+    const value = event.target.value;
+    setSelectedFilter(value);
+  }
+
   return (
     <div className='listoflaunches'>
       <div className='launches_filters'>
         <div className='filter_select'>
-          <select id='select_launches'>
+          <select id='select_launches' onChange={handleSelectFilter} value={selectedFilter}>
             <option value=''>Select</option>
             <option value='upcoming'>Upcoming</option>
             <option value='past'>Past</option>
