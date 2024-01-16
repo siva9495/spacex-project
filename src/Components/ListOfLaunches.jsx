@@ -17,14 +17,21 @@ const ListOflaunches = () => {
           apiUrl += '/past';
         }
 
+        setIsLoading(true);
+
         const response = await fetch(apiUrl);
         const data = await response.json();
 
-        const launchesWithImages = data
-          .filter((launch) => launch.links.flickr_images && launch.links.flickr_images.length > 0)
-          .sort((a, b) => new Date(b.launch_date_utc) - new Date(a.launch_date_utc));
+        // For 'upcoming' and 'null', no need for flickr_images validation
+        // For 'past', do the flickr_images validation
+        const launchesWithImages = (selectedFilter === 'past' || selectedFilter === '')
+          ? data.filter((launch) => launch.links.flickr_images && launch.links.flickr_images.length > 0)
+          : data;
 
-        setLaunches(launchesWithImages);
+        // Sort launches by date in descending order
+        const sortedLaunches = launchesWithImages.sort((a, b) => new Date(b.launch_date_utc) - new Date(a.launch_date_utc));
+
+        setLaunches(sortedLaunches);
 
         setTimeout(() => {
           setIsLoading(false);
