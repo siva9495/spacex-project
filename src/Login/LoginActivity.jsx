@@ -13,7 +13,7 @@ const LoginActivity = () => {
 
             // Store user information in the database
             firebase.database().ref('users/' + user.uid).set({
-                displayName: user.displayName,
+                name: user.displayName,
                 email: user.email,
                 timestamp: firebase.database.ServerValue.TIMESTAMP,
             });
