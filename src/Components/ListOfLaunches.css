@@ -1,0 +1,76 @@
+.listoflaunches{
+    width: 100%;
+    height: calc(100vh - 70px);
+    /* background-color: white; */
+}
+
+.launches_filters{
+    width: 100%;
+    height: 60px;
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+}
+
+.filter_select{
+    margin-left: 50px;
+    height: 55px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+}
+
+#select_launches{
+    height: 70%;
+    width: 100%;
+    border: 2px solid white;
+    border-radius: 4px;
+    outline: none;
+    background-color: black;
+    color: white;
+}
+
+
+
+.list_launches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
+    gap: 20px;
+    padding: 20px; 
+    background-color: black;
+  }
+  
+  .lanch_space {
+    width: 100%;
+    height: 600px;
+    /* background-color: white; */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .lanch_space img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+  }
+
+  #date_mission{
+    font-size: 25px;
+    font-weight: 500;
+    font-family: var(--font-inter);
+    color: white;
+    margin-top: 20px;
+  }
+
+  #mission_name{
+    font-size: 30px;
+    font-weight: 600;
+    font-family: var(--font-inter);
+    color: white;
+    margin-top: 15px;
+  }
+
+
+
+
+
