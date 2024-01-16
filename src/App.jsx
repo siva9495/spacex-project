@@ -38,7 +38,7 @@ function App() {
       {isLoading ? (
         <LoadingPage />
       ) : (
-        <Router>
+        <Router basename="/spacex-project">
           <Switch>
             <Route exact path='/'>
               {LoggedIn ? <Redirect to="/dashboard" /> : <LoginActivity />}
