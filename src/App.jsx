@@ -3,12 +3,18 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 import LoginActivity from './Login/LoginActivity'
 import LanchesDashborad from './Dashboard/LanchesDashborad';
 import firebase from './Firebase/firebase'
+import LoadingPage from './Components/LoadingPage';
 
 function App() {
 
   const [LoggedIn, setLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
 
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if(user){
@@ -19,6 +25,7 @@ function App() {
     })
 
     return () => {
+      clearTimeout(timer);
       unsubscribe();
     };
 
@@ -27,18 +34,22 @@ function App() {
 
 
   return (
-    <Router>
-      <div className='App'>
-        <Switch>
-          <Route exact path='/'>
-            {LoggedIn ? <Redirect to="/dashboard" /> : <LoginActivity />}
-          </Route>
-          <Route path='/dashboard'>
-            {LoggedIn ?  <LanchesDashborad /> : <Redirect to="/" />}
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <div className='App'>
+      {isLoading ? (
+        <LoadingPage />
+      ) : (
+        <Router>
+          <Switch>
+            <Route exact path='/'>
+              {LoggedIn ? <Redirect to="/dashboard" /> : <LoginActivity />}
+            </Route>
+            <Route path='/dashboard'>
+              {LoggedIn ?  <LanchesDashborad /> : <Redirect to="/" />}
+            </Route>
+          </Switch>
+        </Router>
+      )}
+    </div>
   )
 }
 
