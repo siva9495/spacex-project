@@ -1,0 +1,27 @@
+.navbar{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 32px;
+    justify-content: space-between;
+}
+
+.spacex_text_navbar{
+    width: 200px;
+    height: 70px;
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#logo_navbar .fill-white {
+    fill: #fff;
+}
+
+.user_name_navbar h4{
+    color: white;
+    font-family: var(--font-galano);
+}
