@@ -1,0 +1,25 @@
+.loaidng_page{
+    height: 100vh;
+    width: 100%;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spacex_text_loading_page{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loading_page_logo{
+    margin-left: 150px;
+    height: 100px;
+}
+
+#loading_page_logo .fill-white {
+    fill: #fff;
+}
