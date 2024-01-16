@@ -1,7 +1,70 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import './Navbar.css'
+import {useHistory} from 'react-router-dom';
+import firebase from '../Firebase/firebase'
 
 const Navbar = () => {
+
+  const [userProfile, setUserProfile] = useState(null);
+  const [isLoggedOut, setIsLoggedOut] = useState(false);
+  const [userId, setUserId] = useState('');
+  const history = useHistory();
+
+  useEffect(() => {
+    const user = firebase.auth().currentUser;
+    if(user){
+      const userProfileRef = firebase.database().ref(`users/${user.uid}`);
+      userProfileRef.on('value', (snapshot) => {
+        const userProfileData = snapshot.val();
+        setUserProfile(userProfileData);
+      });
+
+      return () => {
+        userProfileRef.off();
+      };
+
+    }
+  }, []);
+
+  // For SignOut the user
+  useEffect(() => {
+    const user = firebase.auth().currentUser;
+    if (user) {
+      setUserId(user.uid);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    if (userId) {
+      firebase
+        .database()
+        .ref('users/' + userId)
+        .remove()
+        .then(() => {
+          return firebase.auth().signOut();
+        })
+        .catch((error) => {
+          console.log('Logout error:', error);
+        });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          setIsLoggedOut(true);
+        })
+        .catch((error) => {
+          console.log('Logout error:', error);
+        });
+    }
+  };
+
+  useEffect(() => {
+    if (isLoggedOut) {
+      history.push('/');
+    }
+  }, [isLoggedOut, history]);
+
   return (
     <div className='navbar'>
         <div className='spacex_text_navbar'>
@@ -35,8 +98,9 @@ const Navbar = () => {
             </g>
             </svg>
         </div>
-        <div className='user_name_navbar'>
-            <h4>Siva Prasad</h4>
+        <div className='user_name_navbar' onClick={handleLogout}>
+            <span id='user_sign_out'>Sign Out</span>
+            {userProfile && <h4>{userProfile.name}</h4>}
         </div>
     </div>
   )

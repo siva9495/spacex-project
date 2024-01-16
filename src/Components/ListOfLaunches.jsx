@@ -5,6 +5,8 @@ const ListOflaunches = () => {
   const [launches, setLaunches] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedFilter, setSelectedFilter] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,16 +24,17 @@ const ListOflaunches = () => {
         const response = await fetch(apiUrl);
         const data = await response.json();
 
-        // For 'upcoming' and 'null', no need for flickr_images validation
-        // For 'past', do the flickr_images validation
         const launchesWithImages = (selectedFilter === 'past' || selectedFilter === '')
           ? data.filter((launch) => launch.links.flickr_images && launch.links.flickr_images.length > 0)
           : data;
 
-        // Sort launches by date in descending order
         const sortedLaunches = launchesWithImages.sort((a, b) => new Date(b.launch_date_utc) - new Date(a.launch_date_utc));
 
-        setLaunches(sortedLaunches);
+        const filteredLaunches = (fromDate && toDate)
+          ? sortedLaunches.filter((launch) => new Date(launch.launch_date_utc) >= new Date(fromDate) && new Date(launch.launch_date_utc) <= new Date(toDate))
+          : sortedLaunches;
+
+        setLaunches(filteredLaunches);
 
         setTimeout(() => {
           setIsLoading(false);
@@ -42,7 +45,7 @@ const ListOflaunches = () => {
     };
 
     fetchData();
-  }, [selectedFilter]);
+  }, [selectedFilter, fromDate, toDate]);
 
   //function to format the date
   const formatDate = (dateString) => {
@@ -55,6 +58,15 @@ const ListOflaunches = () => {
     setSelectedFilter(value);
   }
 
+  const handleDateChange = (e, type) => {
+    const value = e.target.value;
+    if (type === 'from') {
+      setFromDate(value);
+    } else if (type === 'to') {
+      setToDate(value);
+    }
+  }
+
   return (
     <div className='listoflaunches'>
       <div className='launches_filters'>
@@ -64,6 +76,28 @@ const ListOflaunches = () => {
             <option value='upcoming'>Upcoming</option>
             <option value='past'>Past</option>
           </select>
+        </div>
+        <div className="calender_start_from">
+          <div className="calender_from_select">
+            <span id="span_from">From</span>
+            <input
+              type="date"
+              className="form-control"
+              name="startdate"
+              placeholder="dd-mm-yyyy"
+              onChange={(e) => handleDateChange(e, 'from')}
+            />
+          </div>
+          <div className="calender_to_select">
+            <span id="span_to">To</span>
+            <input
+              type="date"
+              className="form-control"
+              name="enddate"
+              placeholder="dd-mm-yyyy"
+              onChange={(e) => handleDateChange(e, 'to')}
+            />
+          </div>
         </div>
       </div>
       <div className='list_launches'>

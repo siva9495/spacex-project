@@ -10,6 +10,7 @@
   /* background-color: red; */
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .filter_select{
@@ -18,6 +19,72 @@
   width: 100px;
   display: flex;
   align-items: center;
+}
+
+.calender_start_from{
+  /* background-color: red; */
+  height: 55px;
+  width: 600px;
+  display: flex;
+  align-items: center;
+}
+
+.calender_from_select{
+  height: 30px;
+  width: 300px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calender_to_select{
+  height: 30px;
+  width: 300px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calender_from_select .form-control{
+  height: 100%;
+  width: 130px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  font-size: 15px;
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+}
+
+#span_from,
+#span_to{
+  margin-right: 15px;
+  color: white;
+  font-size: 13px;
+}
+
+.calender_to_select .form-control{
+  height: 100%;
+  width: 130px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  font-size: 15px;
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  margin-right: 5px;
+}
+
+input[type="date"]::placeholder {
+ margin-left: 10px;
 }
 
 #select_launches{
